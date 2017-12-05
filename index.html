@@ -1,0 +1,242 @@
+<!-- 
+This code was written by Elliot J. Scribner for a CSE01 Project 
+Comments throughout the document explain different pieces of the program,
+and a summary of the code can be found at the bottom of the document
+-->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Elliot's Project</title>
+	<!-- Import jQuery and Chart.js, link the google font used -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+</head>
+<body>
+	<!-- Set styles (specifically the global font) -->
+	<style>
+		body {
+			font-family: Raleway;
+		}
+	</style>
+	<!-- Button calls myFunction() and displays the visualizations once the page and data have fully loaded -->
+	<button onclick="myFunction()" style="float: right; margin-right: 5%; border: 2px solid #000; padding: 1%; font-size: 20px;">Click me</button>
+	<!-- Title information -->
+	<div style="margin-left: 2%; margin-top: 2%">
+		<h2>Crime Accross Different Counties</h2>
+		<h4>By Elliot Scribner</h4>
+		<p>In order to view the visualizations, please click the "Click me" button in the upper right corner!</p>
+	</div>
+	<!-- Visualization canvases for each chart -->
+	<div style="width: 40%; display: inline-block;">
+		<canvas id="chart1" width="400" height="400"></canvas>
+	</div>
+	<div style="width: 40%; display: inline-block;">
+		<canvas id="chart2" width="400" height="400"></canvas>
+	</div>
+	<div style="width: 40%; display: inline-block;">
+		<canvas id="chart3" width="400" height="400"></canvas>
+	</div>
+	<!-- Start of the JavaScript portion of the document -->
+<script>
+	// Declare all variables needed outside of the $(document).ready function
+	var values = [];
+	var labels = [];
+	var scatterPoint = {};
+	var scatterArray = [];
+	var averages = [];
+	var departments = [];
+	var avgRapes = [];
+	var countyName;
+	var stateName;
+	var rapeAvg;
+	// $(document).ready function uses jQuery and ajax to detect when the page has fully loaded to perform calculations and create data arrays
+	$(document).ready(function (){	
+		var jsonData = $.ajax({
+			// Access the data file
+			url:'county_crime.json',
+			dataType: 'json',
+			//The success function creates several variables accessed within the function and collects the data needed for the visualizations
+			success: function(json) {
+				var dict = json;
+				var boulderRapeSum = 0;
+				var boulderRapeCount = 0;
+				var boulderRapeAvg;
+				var brightonRapeSum = 0;
+				var brightonRapeCount = 0;
+				var brightonRapeAvg;
+				for (var i = 0; i < dict.length; i++) {
+					var item = dict[i];
+					if (item["Department"]=="Boulder Police Dept") {
+						values.push(item["Data"]["Rates"]["Property"]["Burglary"]);
+						labels.push(item["Year"]);
+						scatterPoint = {"x": item["Data"]["Rates"]["Violent"]["All"], "y": item["Data"]["Rates"]["Property"]["All"]};
+						scatterArray.push(scatterPoint);			
+					}
+
+				}	
+				// The getAvgRapes() function collects the rape statistics from the county and state passed in, creating a short and easy way of gathering multiple points
+				function getAvgRapes(countyName, stateName) {
+					var rapeSum = 0;
+					var rapeCount = 0;
+					for (var i = 0; i < dict.length; i++) {
+						var item = dict[i];
+						if (item["Department"]==countyName && item["State"]==stateName && item["Year"] > 2007) {
+							rapeSum = rapeSum + item["Data"]["Rates"]["Violent"]["Rape"];
+							rapeCount = rapeCount + 1;
+							rapeAvg = rapeSum/rapeCount;	
+						}
+					}
+					return(rapeAvg);
+				}
+				// Call the getAvgRapes() function for each of the data points tested
+				avgRapes.push(getAvgRapes("Boulder Police Dept", "Colorado"));
+				avgRapes.push(getAvgRapes("Camden Police Dept", "New Jersey"));
+				avgRapes.push(getAvgRapes("Allentown City Police Dept", "Pennsylvania"));
+				avgRapes.push(getAvgRapes("New York City Police Dept", "New York"));
+				avgRapes.push(getAvgRapes("San Francisco Police Dept", "California"));
+				avgRapes.push(getAvgRapes("Fargo Police Dept", "North Dakota"));
+			}
+		});
+	});
+
+	// myFunction() is called by the button, which performs the visualizations using Chart.js
+	function myFunction(){
+		// First the ctx variable is created, which accesses the chart1 canvas
+		// Code for question 1
+		var ctx = document.getElementById("chart1");
+		// Then the chart is created on the ctx variable. This chart is a line chart which uses an array of values as data
+		var chart = new Chart(ctx, {
+			type: 'line',
+			data: {
+			     datasets:[{
+			     			label: 'Rate of Burglary Over Time in Boulder',
+			                 data: values,
+			     }],
+				labels: labels,
+			},
+			options: {
+				scales: {
+					xAxes: [{
+						scaleLabel: {
+							display: true,
+							labelString: 'Time (Years)'
+						}
+					}],
+					yAxes: [{
+						scaleLabel: {
+							display: true,
+							labelString: 'Rate of Burglary (Burglaries per 100,000 in Population)'
+						}
+					}]
+				}
+			} 
+		});
+		// The second chart is a scatter plot, which uses an array of dicts to create many points for each data point
+		// Code for question 2
+		var ctx2 = document.getElementById("chart2");
+		var chart = new Chart(ctx2, {
+			type: 'scatter',
+			data: {
+			    datasets: [{
+			        label: 'Rate of Violent Crimes vs. Property Crimes in Boulder',
+			        data: scatterArray,
+			    }]
+			},
+			options: {
+			    scales: {
+			        xAxes: [{
+			            type: 'linear',
+			            position: 'bottom',
+			            scaleLabel: {
+					        display: true,
+					        labelString: 'Rate of Violent Crimes (Violent Crimes per 100,000 in Population)'
+				      },
+				      ticks: {
+				      	beginAtZero: true
+				      }
+			        }],
+			        yAxes: [{
+			        	scaleLabel: {
+			        		display: true,
+			        		labelString: 'Rate of Property Crimes (Property Crimes per 100,000 in Population)'
+			        	},
+				      ticks: {
+				      	beginAtZero: true
+				      }
+			        }]
+			    },
+			}
+		});
+		// The final visualization is a bar chart, which uses an array of six averages created by the getAverageRapes() function
+		// Code for question 3
+		var ctx3 = document.getElementById("chart3");
+		var myChart = new Chart(ctx3, {
+			type: 'bar',
+			data: {
+			     labels: ["Boulder, CO", "Camden, NJ", "Allentown, PA", "New York, NY", "San Francisco, CA", "Fargo, ND"],
+			     datasets: [{
+			         label: 'Average Rate of Rape Accross 6 Counties Between 2007 and 2012',
+			         data: avgRapes,
+			         backgroundColor: [
+			                'rgba(255, 99, 132, 0.2)',
+			                'rgba(54, 162, 235, 0.2)',
+			                'rgba(255, 206, 86, 0.2)',
+			                'rgba(75, 192, 192, 0.2)',
+			                'rgba(153, 102, 255, 0.2)',
+			                'rgba(255, 159, 64, 0.2)'
+			         ],
+			         borderColor: [
+			                'rgba(255,99,132,1)',
+			                'rgba(54, 162, 235, 1)',
+			                'rgba(255, 206, 86, 1)',
+			                'rgba(75, 192, 192, 1)',
+			                'rgba(153, 102, 255, 1)',
+			                'rgba(255, 159, 64, 1)'
+			         ],
+			         borderWidth: 1
+			       }]
+			     },
+			options: {
+		        scales: {
+					yAxes: [{
+						scaleLabel: {
+							display: true,
+							labelString: 'Average Rape Rate (Rapes per 100,000 in Population)'
+						},
+						ticks: {
+					    	beginAtZero:true
+					    },
+					}]
+				}
+		    }
+		});
+	}
+</script>
+</body>
+<!-- 
+Full Code Description
+~~~~~~~~~~~~~~~~~~~~~~
+The code document is split up into two parts- the HTML and the JavaScript. 
+
+In the HTML, we create a few basic elements to describe and create the visualizations. 
+We also created the canvas elements that hold the final visualizations.
+
+In the JavaScript portion, we access the JSON data file and use jQuery and Ajax to collect 
+our data points using several functions and loops. The data points are pushed into arrays,
+which are then used in the myFunction() function to create each individual visualization.
+
+-->
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
