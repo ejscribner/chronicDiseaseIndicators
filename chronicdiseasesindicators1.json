@@ -1,10 +1,70 @@
-/**
- Export to JSON plugin for PHPMyAdmin
- @version 0.1
- */
-
-// Database 'project2_db'
-
-// project2_db.chronicdiseasesindicators
-
-[{"AVG(DataValue)":"15.086667","Category":"Alcohol"}, {"AVG(DataValue)":"31.825000","Category":"Arthritis"}, {"AVG(DataValue)":"48.267742","Category":"Asthma"}, {"AVG(DataValue)":"78.485714","Category":"Cancer"}, {"AVG(DataValue)":"57.725581","Category":"Cardiovascular Disease"}, {"AVG(DataValue)":"19.800000","Category":"Chronic Kidney Disease"}, {"AVG(DataValue)":"42.662500","Category":"Chronic Obstructive Pulmonary Disease"}, {"AVG(DataValue)":"54.323580","Category":"Diabetes"}, {"AVG(DataValue)":"34.600000","Category":"Disability"}, {"AVG(DataValue)":"38.200000","Category":"Immunization"}, {"AVG(DataValue)":"13.550000","Category":"Mental Health"}, {"AVG(DataValue)":"35.928302","Category":"Nutrition, physical activity, and weight status"}, {"AVG(DataValue)":"33.051429","Category":"Older Adults"}, {"AVG(DataValue)":"52.795758","Category":"Oral Health"}, {"AVG(DataValue)":"28.994595","Category":"Overarching Conditions"}, {"AVG(DataValue)":"49.800000","Category":"Reproductive Health"}, {"AVG(DataValue)":"31.948571","Category":"Tobacco"}]
+[
+   {
+      "AVG(DataValue)":15.086667,
+      "Category":"Alcohol"
+   },
+   {
+      "AVG(DataValue)":"31.825000",
+      "Category":"Arthritis"
+   },
+   {
+      "AVG(DataValue)":"48.267742",
+      "Category":"Asthma"
+   },
+   {
+      "AVG(DataValue)":"78.485714",
+      "Category":"Cancer"
+   },
+   {
+      "AVG(DataValue)":"57.725581",
+      "Category":"Cardiovascular Disease"
+   },
+   {
+      "AVG(DataValue)":"19.800000",
+      "Category":"Chronic Kidney Disease"
+   },
+   {
+      "AVG(DataValue)":"42.662500",
+      "Category":"Chronic Obstructive Pulmonary Disease"
+   },
+   {
+      "AVG(DataValue)":"54.323580",
+      "Category":"Diabetes"
+   },
+   {
+      "AVG(DataValue)":"34.600000",
+      "Category":"Disability"
+   },
+   {
+      "AVG(DataValue)":"38.200000",
+      "Category":"Immunization"
+   },
+   {
+      "AVG(DataValue)":"13.550000",
+      "Category":"Mental Health"
+   },
+   {
+      "AVG(DataValue)":"35.928302",
+      "Category":"Nutrition, physical activity, and weight status"
+   },
+   {
+      "AVG(DataValue)":"33.051429",
+      "Category":"Older Adults"
+   },
+   {
+      "AVG(DataValue)":"52.795758",
+      "Category":"Oral Health"
+   },
+   {
+      "AVG(DataValue)":"28.994595",
+      "Category":"Overarching Conditions"
+   },
+   {
+      "AVG(DataValue)":"49.800000",
+      "Category":"Reproductive Health"
+   },
+   {
+      "AVG(DataValue)":"31.948571",
+      "Category":"Tobacco"
+   }
+]

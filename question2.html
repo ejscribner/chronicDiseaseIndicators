@@ -1,0 +1,101 @@
+<!-- 
+This code was written by Elliot J. Scribner for a CSE01 Project 
+Comments throughout the document explain different pieces of the program,
+and a summary of the code can be found at the bottom of the document
+-->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Question 2</title>
+	<!-- Import jQuery and Chart.js, link the google font used -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+</head>
+<body>
+	<!-- Set styles (specifically the global font) -->
+	<style>
+		body {
+			font-family: Raleway;
+		}
+	</style>
+	<!-- Button calls myFunction() and displays the visualizations once the page and data have fully loaded -->
+	<button onclick="myFunction()" style="float: right; margin-right: 5%; border: 2px solid #000; padding: 1%; font-size: 20px;">Click me</button>
+	<!-- Title information -->
+	<div style="margin-left: 2%; margin-top: 2%">
+		<h2>Question 2: What states have the highest percentage of chronic disease caused by Alchohol?</h2>
+		<h4>By Elliot Scribner</h4>
+		<p>In order to view the visualization, please click the "Click me" button in the upper right corner!</p>
+	</div>
+	<!-- Visualization canvases for each chart -->
+	<div style="width: 40%; display: inline-block;">
+		<canvas id="chart1" width="400" height="400"></canvas>
+	</div>
+	<!-- Start of the JavaScript portion of the document -->
+<script>
+	// Declare all variables needed outside of the $(document).ready function
+	var values = [];
+	var labels = [];
+	// $(document).ready function uses jQuery and ajax to detect when the page has fully loaded to perform calculations and create data arrays
+	$(document).ready(function (){	
+		var jsonData = $.ajax({
+			// Access the data file
+			url:'chronicdiseasesindicators1.json',
+			dataType: 'json',
+			//The success function creates several variables accessed within the function and collects the data needed for the visualizations
+			success: function(json) {
+				var dict = json;
+				for (var i = 0; i < dict.length; i++) {
+					var item = dict[i];
+						values.push(parseFloat(item["AVG(DataValue)"]));
+						labels.push(item["Category"]);
+				}	
+			}
+		});
+	});
+
+	// myFunction() is called by the button, which performs the visualizations using Chart.js
+	function myFunction(){
+		// First the ctx variable is created, which accesses the chart1 canvas
+		// Code for question 1
+		var ctx = document.getElementById("chart1");
+		// Then the chart is created on the ctx variable. This chart is a line chart which uses an array of values as data
+		var chart = new Chart(ctx, {
+			type: 'pie',
+			data: {
+			     datasets:[{
+			     			label: 'Rate of Burglary Over Time in Boulder',
+			                 data: values,
+			     }],
+				labels: labels,
+			},
+		});
+	}
+</script>
+</body>
+<!-- 
+Full Code Description
+~~~~~~~~~~~~~~~~~~~~~~
+The code document is split up into two parts- the HTML and the JavaScript. 
+
+In the HTML, we create a few basic elements to describe and create the visualization. 
+We also created the canvas element that hold the final visualization.
+
+In the JavaScript portion, we access the JSON data file and use jQuery and Ajax to collect 
+our data points using several functions and loops. The data points are pushed into arrays,
+which are then used in the myFunction() function to create the visualization.
+
+-->
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
