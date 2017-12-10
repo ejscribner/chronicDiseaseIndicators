@@ -1,0 +1,37 @@
+[
+   {
+      "AVG(LowConfidenceInterval)":"66.577090",
+      "AVG(HighConfidenceInterval)":"75.128853",
+      "LocationAbbr":"CA"
+   },
+   {
+      "AVG(LowConfidenceInterval)":"24.069048",
+      "AVG(HighConfidenceInterval)":"31.342857",
+      "LocationAbbr":"CO"
+   },
+   {
+      "AVG(LowConfidenceInterval)":"46.456944",
+      "AVG(HighConfidenceInterval)":"52.742608",
+      "LocationAbbr":"MA"
+   },
+   {
+      "AVG(LowConfidenceInterval)":"48.267979",
+      "AVG(HighConfidenceInterval)":"56.364919",
+      "LocationAbbr":"ME"
+   },
+   {
+      "AVG(LowConfidenceInterval)":"65.425411",
+      "AVG(HighConfidenceInterval)":"72.791987",
+      "LocationAbbr":"NY"
+   },
+   {
+      "AVG(LowConfidenceInterval)":"67.626541",
+      "AVG(HighConfidenceInterval)":"75.495426",
+      "LocationAbbr":"PA"
+   },
+   {
+      "AVG(LowConfidenceInterval)":"44.225276",
+      "AVG(HighConfidenceInterval)":"53.587504",
+      "LocationAbbr":"VT"
+   }
+]

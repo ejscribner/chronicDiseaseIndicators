@@ -23,7 +23,7 @@ and a summary of the code can be found at the bottom of the document
 	<button onclick="myFunction()" style="float: right; margin-right: 5%; border: 2px solid #000; padding: 1%; font-size: 20px;">Click me</button>
 	<!-- Title information -->
 	<div style="margin-left: 2%; margin-top: 2%">
-		<h2>Question 3: Over time, how has the percentage of chronic disease caused by Arthritis changed?</h2>
+		<h2>Question 3: What are the average confidence intervals for chronic diseases caused by arthritis in several states?</h2>
 		<h4>By Elliot Scribner</h4>
 		<p>In order to view the visualization, please click the "Click me" button in the upper right corner!</p>
 	</div>
@@ -34,25 +34,29 @@ and a summary of the code can be found at the bottom of the document
 	<!-- Start of the JavaScript portion of the document -->
 <script>
 	// Declare all variables needed outside of the $(document).ready function
-	var values = [];
+	var intLow = [];
+	var intHigh = [];
 	var labels = [];
 	// $(document).ready function uses jQuery and ajax to detect when the page has fully loaded to perform calculations and create data arrays
 	$(document).ready(function (){	
 		var jsonData = $.ajax({
 			// Access the data file
-			url:'chronicdiseasesindicators2.json',
+			url:'chronicdiseasesindicators3.json',
 			dataType: 'json',
 			//The success function creates several variables accessed within the function and collects the data needed for the visualizations
 			success: function(json) {
 				var dict = json;
 				for (var i = 0; i < dict.length; i++) {
 					var item = dict[i];
-						values.push(parseFloat(item["AVG(DataValue)"]));
-						labels.push(item["LocationDesc"]);
+						intLow.push(parseFloat(item["AVG(LowConfidenceInterval)"]));
+						intHigh.push(parseFloat(item["AVG(HighConfidenceInterval)"])-intLow[i]);
+						labels.push(item["LocationAbbr"]);
 				}	
 			}
 		});
 	});
+	console.log(intLow);
+			console.log(intHigh);
 
 	// myFunction() is called by the button, which performs the visualizations using Chart.js
 	function myFunction(){
@@ -61,14 +65,32 @@ and a summary of the code can be found at the bottom of the document
 		var ctx = document.getElementById("chart1");
 		// Then the chart is created on the ctx variable. This chart is a line chart which uses an array of values as data
 		var chart = new Chart(ctx, {
-			type: 'bar',
-			data: {
-			     datasets:[{
-			     			label: 'Percentage of Chronic Diseases Caused by Alcohol',
-			                 data: values,
-			     }],
-				labels: labels,
-			},
+		    type: 'bar',
+		    data: {
+		    	labels: labels,
+		    	datasets: [{
+		    		label: 'Low Confidence Interval',
+		    		data: intLow,
+		    		backgroundColor: "#ff5050",
+		    		borderColor: "#99ff66",
+		    	}, {
+		    		label: 'High Confidence Interval',
+		    		data: intHigh,
+		    		backgroundColor: "#0066ff",
+		    		borderColor: "#99ff66",
+		    	}]
+		    },
+		    
+		    options: {
+		        scales: {
+		            xAxes: [{
+		                stacked: true
+		            }],
+		            yAxes: [{
+		                stacked: true
+		            }]
+		        }
+		    }
 		});
 	}
 </script>
