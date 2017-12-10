@@ -23,6 +23,7 @@ and a summary of the code can be found at the bottom of the document
 	<button onclick="myFunction()" style="float: right; margin-right: 5%; border: 2px solid #000; padding: 1%; font-size: 20px;">Click me</button>
 	<!-- Title information -->
 	<div style="margin-left: 2%; margin-top: 2%">
+		<a href="index.html"><- Back</a>
 		<h2>Question 3: What are the average confidence intervals for chronic diseases caused by arthritis in several states?</h2>
 		<h4>By Elliot Scribner</h4>
 		<p>In order to view the visualization, please click the "Click me" button in the upper right corner!</p>
@@ -80,7 +81,6 @@ and a summary of the code can be found at the bottom of the document
 		    		borderColor: "#99ff66",
 		    	}]
 		    },
-		    
 		    options: {
 		        scales: {
 		            xAxes: [{
@@ -89,7 +89,8 @@ and a summary of the code can be found at the bottom of the document
 		            yAxes: [{
 		                stacked: true
 		            }]
-		        }
+		        },
+		        responsive: false
 		    }
 		});
 	}

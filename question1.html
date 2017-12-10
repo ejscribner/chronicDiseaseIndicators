@@ -23,6 +23,7 @@ and a summary of the code can be found at the bottom of the document
 	<button onclick="myFunction()" style="float: right; margin-right: 5%; border: 2px solid #000; padding: 1%; font-size: 20px;">Click me</button>
 	<!-- Title information -->
 	<div style="margin-left: 2%; margin-top: 2%">
+		<a href="index.html"><- Back</a>
 		<h2>Question 1: What are the most common indicators of chronic disease in Pennsylvania?</h2>
 		<h4>By Elliot Scribner</h4>
 		<p>In order to view the visualization, please click the "Click me" button in the upper right corner!</p>
@@ -65,7 +66,26 @@ and a summary of the code can be found at the bottom of the document
 			data: {
 			     datasets:[{
 			     			label: 'Rate of Burglary Over Time in Boulder',
-			                 data: values,
+			                data: values,
+			                backgroundColor: [
+				                'rgba(255, 99, 132, 0.2)',
+				                'rgba(54, 162, 235, 0.2)',
+				                'rgba(255, 206, 86, 0.2)',
+				                'rgba(75, 192, 192, 0.2)',
+				                'rgba(153, 102, 255, 0.2)',
+				                'rgba(255, 159, 64, 0.2)',
+				                'RGBA(113, 139, 24, 0.2)',
+				                'RGBA(99, 146, 239, 0.2)',
+				                'RGBA(195, 232, 141, 0.2)',
+				                'RGBA(38, 50, 56, 0.2)',
+				                'RGBA(58, 166, 248, 0.2)',
+				                'RGBA(251, 95, 107, 0.2)',
+				                'RGBA(153, 66, 107, 0.2)',
+				                'RGBA(93, 42, 110, 0.2)',
+				                'RGBA(47, 213, 102, 0.2)',
+				                'RGBA(30, 134, 243, 0.2)',
+				               	'RGBA(113, 139, 24, 0.2)',
+			                ]
 			     }],
 				labels: labels,
 			},
